@@ -3,25 +3,32 @@
 import time
 from decimal import Decimal, getcontext, InvalidOperation
 
-getcontext().prec = 20
+getcontext().prec = 6
 
 
-def summ(num1, num2):
-    return num1 + num2
+class Calculator:
 
+    def __init__(self, num1, num2):
+        self.num1 = Decimal(num1)
+        self.num2 = Decimal(num2)
 
-def substruct(num1, num2):
-    return num1 - num2
+    def summ(self):
+        result = self.num1 + self.num2
+        return result
 
+    def substruct(self):
+        result = self.num1 - self.num2
+        return result
 
-def multiply(num1, num2):
-    return num1 * num2
+    def multiply(self):
+        result = self.num1 * self.num2
+        return result
 
-
-def divide(num1, num2):
-    if num2 == 0:
-        return None
-    return num1 / num2
+    def divide(self):
+        if self.num2 == 0:
+            return None
+        result = self.num1 / self.num2
+        return result
 
 
 def calculator():
@@ -37,23 +44,24 @@ def calculator():
 
     if selection in ['1', '2', '3', '4']:
         try:
-            num1 = Decimal(input('Введите первое число: '))
-            num2 = Decimal(input('Введите второе число: '))
+            num1 = input('Введите первое число: ')
+            num2 = input('Введите второе число: ')
+            klass = Calculator(num1, num2)
         except InvalidOperation:
             print('Ошибка ввода. Пожалуйста, введите число')
             return None
 
         if selection == '1':
-            result = summ(num1, num2)
+            result = klass.summ()
             print(f'{num1} + {num2} = {result}')
         elif selection == '2':
-            result = substruct(num1, num2)
+            result = klass.substruct()
             print(f'{num1} - {num2} = {result}')
         elif selection == '3':
-            result = multiply(num1, num2)
+            result = klass.multiply()
             print(f'{num1} * {num2} = {result}')
         else:
-            result = divide(num1, num2)
+            result = klass.divide()
             if result is None:
                 print('Нельзя делить на ноль, иначе вселенной придет конец')
             else:
